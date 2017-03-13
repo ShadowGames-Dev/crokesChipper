@@ -22,6 +22,7 @@ var db = MongoClient.connect(mDB, function(err, db) {
         throw err;
     console.log("connected to the mongoDB at: " + runtime.mongodb);
 	
+	myCollections.categories = db.collection('categories');
 	myCollections.items = db.collection('items');
 	myCollections.dicounts = db.collection('discounts');
  
