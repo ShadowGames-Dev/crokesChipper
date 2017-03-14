@@ -5,6 +5,8 @@ crokesChipper.run(function( ) {
 
 });
 
+//FIX ROUTE ISSUE WITH MENU AND ANY ADDITIONAL PAGES!!!
+
 crokesChipper.config(['$routeProvider','$httpProvider', '$provide',  '$locationProvider',
       function($routeProvider, $httpProvider, $provide,  $locationProvider ) {	 
 	  
@@ -15,9 +17,15 @@ crokesChipper.config(['$routeProvider','$httpProvider', '$provide',  '$locationP
 					  when('/home', {
 						templateUrl: './partials/home.html',
 						controller: 'HomeCtrl'
-					  }).	 	 						
+					  }).	
+					  when('/menu', {
+						templateUrl: './partials/menu.html',
+						controller: 'MenuCtrl'
+					  }).	 						
 					  otherwise({
-						redirectTo: '/home'
+						redirectTo: '/menu'
 					  });
+
+			//$locationProvider.html5Mode(true); removes # in URL, breaks routes 
  			
   }]);

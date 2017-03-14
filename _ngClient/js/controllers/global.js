@@ -1,15 +1,17 @@
 var appGlobalController = angular.module('appGlobalController', []);
  
-
-  appGlobalController.controller('PlaceboCtrl', ['$rootScope','$scope'  ,
-        function($rootScope,$scope) {
-        	
-          console.log("PlaceboCtrl"); 			
- 
- 		}]);
- 
 appGlobalController.controller('HomeCtrl', ['$scope' ,
 		function($scope) {
 			
+			$scope.title= "Crokes POS Login";
 	 
 		}]);
+	
+ 
+	
+appGlobalController.controller('MenuCtrl', ['$scope', 
+  function($scope) {
+
+  	$scope.title= "Crokes Menu";
+  
+  }]);
