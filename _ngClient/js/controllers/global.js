@@ -1,17 +1,8 @@
-var appGlobalController = angular.module('appGlobalController', []);
+var globalController = angular.module('globalController', []);
  
-appGlobalController.controller('HomeCtrl', ['$scope' ,
+globalController.controller('HomeCtrl', ['$scope' ,
 		function($scope) {
 			
 			$scope.title= "Crokes POS Login";
 	 
 		}]);
-	
- 
-	
-appGlobalController.controller('MenuCtrl', ['$scope', 
-  function($scope) {
-
-  	$scope.title= "Crokes Menu";
-  
-  }]);

@@ -1,11 +1,9 @@
 var crokesChipper = angular.module("crokesChipper", ['ngRoute', 'nrzLightify',
-     'appGlobalController',  'ngResource' ]);
+     'globalController', 'employeesController', 'itemsController', 'ordersController', 'ngResource' ]);
 
 crokesChipper.run(function( ) {
 
 });
-
-//FIX ROUTE ISSUE WITH MENU AND ANY ADDITIONAL PAGES!!!
 
 crokesChipper.config(['$routeProvider','$httpProvider', '$provide',  '$locationProvider',
       function($routeProvider, $httpProvider, $provide,  $locationProvider ) {	 
@@ -18,12 +16,20 @@ crokesChipper.config(['$routeProvider','$httpProvider', '$provide',  '$locationP
 						templateUrl: './partials/home.html',
 						controller: 'HomeCtrl'
 					  }).	
-					  when('/menu', {
-						templateUrl: './partials/menu.html',
-						controller: 'MenuCtrl'
-					  }).	 						
+					  when('/order', {
+						templateUrl: './partials/order.html',
+						controller: 'OrderCtrl'
+					  }).
+					  when('/item-manager', {
+						templateUrl: './partials/item-manager.html',
+						controller: 'ItemCtrl'
+					  }).
+					  when('/employee-manager', {
+						templateUrl: './partials/employee-manager.html',
+						controller: 'EmployeeCtrl'
+					  }). 						
 					  otherwise({
-						redirectTo: '/menu'
+						redirectTo: '/order'
 					  });
 
 			//$locationProvider.html5Mode(true); removes # in URL, breaks routes 

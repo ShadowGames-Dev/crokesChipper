@@ -21,10 +21,10 @@ var db = MongoClient.connect(mDB, function(err, db) {
     if(err)
         throw err;
     console.log("connected to the mongoDB at: " + runtime.mongodb);
-	
-	myCollections.categories = db.collection('categories');
-	myCollections.items = db.collection('items');
-	myCollections.dicounts = db.collection('discounts');
+
+    myCollections.categories = db.collection('categories');
+    myCollections.items = db.collection('items');
+    myCollections.discounts = db.collection('discounts');
  
 });
 
@@ -113,6 +113,120 @@ app.all('/*', function(req, res, next) {
 });
 
 //--------------------
+
+//DB Functions --------------------
+
+//CATEGORIES ---
+
+function findCategories(cb) {
+        myCollections.categories.find().toArray(cb);
+    }
+ 
+function getCategories(req, res, cb) {
+    findCategories(function(err, results) {
+     
+    if(err)
+        {
+            console.log("error:");
+            console.log(err.message);
+            res.status(404);
+            res.json({"error": err.message});
+        } 
+
+    res.status(200);
+    res.json(results);  
+    });
+    }
+
+app.get('/api/v1/categories', function(req, res) { 
+  
+    console.log('GET /api/items');
+    
+    getCategories(req,res);
+});
+
+app.post('/api/categories', function(req, res) { 
+  
+    console.log('POST /api/items');
+ 
+    getCategories(req,res);
+});
+
+//ITEMS ---
+
+function findItems(cb) {
+        myCollections.items.find().toArray(cb);
+    }
+ 
+function getItems(req, res, cb) {
+    findItems(function(err, results) {
+     
+    if(err)
+        {
+            console.log("error:");
+            console.log(err.message);
+            res.status(404);
+            res.json({"error": err.message});
+        } 
+
+    res.status(200);
+    res.json(results);  
+    });
+    }
+
+app.get('/api/v1/items', function(req, res) { 
+  
+    console.log('GET /api/items');
+    
+    getItems(req,res);
+});
+
+app.post('/api/items', function(req, res) { 
+  
+    console.log('POST /api/items');
+ 
+    getItems(req,res);
+});
+
+
+//SPECIALS ---
+
+function findDiscounts(cb) {
+        myCollections.discounts.find().toArray(cb);
+    }
+ 
+function getDiscounts(req, res, cb) {
+    findDiscounts(function(err, results) {
+     
+    if(err)
+        {
+            console.log("error:");
+            console.log(err.message);
+            res.status(404);
+            res.json({"error": err.message});
+        } 
+    
+    res.status(200);
+    res.json(results);  
+    });
+    }
+
+app.get('/api/v1/discounts', function(req, res) { 
+  
+    console.log('GET /api/discounts');
+    
+    getDiscounts(req,res);
+});
+
+app.post('/api/discounts', function(req, res) { 
+  
+    console.log('POST /api/discounts');
+ 
+    getDiscounts(req,res);
+});
+
+
+//---------------------------------
 
 
 

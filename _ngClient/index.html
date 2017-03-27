@@ -25,6 +25,9 @@
 <script type="text/javascript" src="/js_thirdparty/notify/bootstrap-notify.js"></script> 	 	
 <script type="text/javascript" src="/js_thirdparty/notify/angular-lightify.js"></script>   	
 <script type="text/javascript" src="js/controllers/global.js"  > </script>
+<script type="text/javascript" src="js/controllers/orders.js"  > </script>
+<script type="text/javascript" src="js/controllers/items.js"  > </script>
+<script type="text/javascript" src="js/controllers/employees.js"  > </script>
 <script type="text/javascript" src="js/app.js" > </script>
 <base href="/"> 
  
@@ -36,14 +39,58 @@
     <nav id="sidebar-wrapper">
         <ul class="sidebar-nav">
             <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
-            <li class="sidebar-brand"><a href="#menu" onclick=$("#menu-close").click();>Orders</a></li>
-            <li><a href="#menu" onclick=$("#menu-close").click();>Manage Menu Items</a></li>
-            <li><a href="#menu" onclick=$("#menu-close").click();>Manage Employees</a></li>
+            <li class="sidebar-brand"><a href="#order" onclick=$("#menu-close").click();>Orders</a></li>
+            <li><a href="#item-manager" onclick=$("#menu-close").click();>Manage Menu Items</a></li>
+            <li><a href="#employee-manager" onclick=$("#menu-close").click();>Manage Employees</a></li>
             <li><a href="#home" onclick=$("#menu-close").click();>Logout</a></li>
         </ul>
     </nav>
 
 <div ng-view ></div>
+
+<script type="text/ng-template" id="displaycategory">
+ 
+         <div class="col-md-1">
+         {{$index+1}}
+         </div>
+          <div class="col-md-3"   >
+            {{i.name}}
+         </div>
+          <div class="col-md-3">
+            {{i.qty}}
+         </div>
+          <div class="col-md-1">
+            {{i.price}}
+         </div>   
+</script>
+
+<script type="text/ng-template" id="displayitem">
+ 
+         <div class="col-md-1">
+         {{$index+1}}
+         </div>
+          <div class="col-md-3"   >
+            {{i.name}}
+         </div>
+          <div class="col-md-3">
+            {{i.qty}}
+         </div>
+          <div class="col-md-1">
+            {{i.price}}
+         </div>   
+</script>
+
+<script type="text/ng-template" id="displaydiscount">
+         <div class="col-md-1">
+            {{d._id}}
+         </div>
+          <div class="col-md-3"   >
+            {{d.title}}
+         </div>
+          <div class="col-md-1">
+            {{d.price}}
+         </div>   
+</script>
 
 <footer>
 <hr/>
