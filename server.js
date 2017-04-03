@@ -225,11 +225,6 @@ app.post('/api/discounts', function(req, res) {
     getDiscounts(req,res);
 });
 
-
-//---------------------------------
-
-
-
 //Errors ----------
 
 app.use(function(req, res, next) {

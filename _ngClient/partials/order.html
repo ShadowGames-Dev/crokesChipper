@@ -10,84 +10,63 @@
 
 <div class="row">
 
+<!-- Menu -->
+
 <div class="col-xs-4">
 <div class="bord">
-
-<button type="button" ng-click="loadCategories()" ng-disabled="asynchWait" >Load Categories</button>
-<button type="button" ng-click="loadItems()" ng-disabled="asynchWait" >Load Items</button>
-<button type="button" ng-click="loadDiscounts()" ng-disabled="asynchWait" >Load Discounts</button>
-
 <h1 class="text-center">Menu</h1>
-<ul class="list-unstyled">
-<li>Categories - </li>
+<hr/>
 
+<h3>Categories -</h3>
+<div id="showItemsByCat">
+ <div id="{{c._id}}" class="row" ng-repeat="c in categories"
+ ng-include src="getTemplateCategoryItems(c)"
+ >
+</div>
+</div>
 
-
-<li>Items - </li>
-
-<div id="showItems" >
- <div id="{{i._id}}" class="row" ng-repeat="i in items| orderBy:['name','qty', 'price'] track by i._id"
+<h3>Items -</h3>
+<div id="showItems">
+ <div id="{{i._id}}" class="row" ng-repeat="i in items| orderBy:['_id'] track by i._id"
  ng-include src="getTemplateItems(i)"
  >
- <!--
- <div class="col-md-1">
- {{$index+1}}
  </div>
-  <div class="col-md-3"    >
-    {{i.name}}
  </div>
-  <div class="col-md-3">
-    {{i.qty}}
- </div>
-  <div class="col-md-1">
-    {{i.price}}
- </div> 
- -->
-</div>
-</div>
-</ul>
+
 
 </div>
 </div>
+
+<!-- Specials -->
 
 <div class="col-xs-4">
 <div class="bord">
-
 <h1 class="text-center">Specials</h1>
-<ul class="list-unstyled">
-<li>Specials</li>
+<hr/>
 
-<div id="showDiscounts" >
- <div id="{{d._id}}" class="row" ng-repeat="d in discounts| orderBy:['_id'] track by d._id"
+<div id="showDiscounts">
+ <div id="{{d._id}}" class="row" ng-repeat="d in discounts"
  ng-include src="getTemplateDiscounts(d)"
  >
- <!--
- <div class="col-md-1">
- {{d._id}}
- </div>
-  <div class="col-md-3"    >
-    {{d.title}}
- </div>
-  <div class="col-md-1">
-    {{d.price}}
- </div> 
- -->
 </div>
 </div>
 
-</ul>
+</div>
+</div>
 
-</div>
-</div>
+<!-- Orders -->
 
 <div class="col-xs-4">
 <div class="bord">
-
 <h1 class="text-center">Order</h1>
-<ul class="list-unstyled">
-<li>Sample 1</li>
-<li>Sample 2</li>
-</ul>
+<hr/>
+
+<div id="showOrder">
+ <div id="{{o._id}}" class="row" ng-repeat="o in order"
+ ng-include src="getTemplateOrder(o)"
+ >
+</div>
+</div>
 
 </div>
 </div>

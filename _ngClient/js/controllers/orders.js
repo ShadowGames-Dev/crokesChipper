@@ -8,8 +8,9 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
   	//Categories ---
 
   	var aPromise;
+  	var itemList, discountList, OrderList;
 
-  	$scope.loadCategories = function() 
+  	loadCategories = function() 
 		{ 
 		    $scope.asynchWait = true;
 			displayCategories({});
@@ -35,13 +36,13 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 						  });
 		}
 
-		$scope.getTemplateCategorys = function (category) {
-			return 'displaycategory';
+		$scope.getTemplateCategoryItems = function (category) {
+			return 'displaycategoryitems';
 		};
 
   	//ITEMS ---
 
-  	$scope.loadItems = function() 
+  	loadItems = function() 
 		{ 
 		    $scope.asynchWait = true;
 			displayItems({});
@@ -60,6 +61,7 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 			aPromise.then(function(response) 
 						  {
 							$scope.items = response.data;
+							itemList = response.data;
 						  },
 						  function error(error)
 						  {
@@ -73,7 +75,7 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 
 	//Discounts ---
 
-	$scope.loadDiscounts = function() 
+	loadDiscounts = function() 
 		{ 
 		    $scope.asynchWait = true;
 			displayDiscounts({});
@@ -92,6 +94,7 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 			aPromise.then(function(response) 
 						  {
 							$scope.discounts = response.data;
+							discountList = response.data;
 						  },
 						  function error(error)
 						  {
@@ -102,5 +105,64 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 		$scope.getTemplateDiscounts = function (discount) {
 			return 'displaydiscount';
 		};
+
+	//Handle Orders
+
+	initOrder = function(){
+		OrderList = [];
+	}
+
+	$scope.addToOrder = function (itemId) {
+
+			$scope.items.some(function(item){
+
+				var temp = {
+						_id: item._id,
+						name: (item.name+" "+item.category_id),
+						qty: 1,
+						price: item.price
+					}
+
+				if(item._id == itemId && OrderList == 0){
+						OrderList.push(temp);
+					}
+
+				else if(item._id == itemId){
+
+				OrderList.some(function(tempChk){
+					if(tempChk._id == temp._id)
+					{
+						temp = {
+							_id: tempChk._id,
+							name: tempChk.name,
+							qty: (tempChk.qty++),
+							price: tempChk.price
+						}
+						//index = OrderList.findIndex(x => x._id==temp._id);
+						//console.log(index);
+						//OrderList[index] = temp
+					}else {
+						OrderList.push(temp);
+					}
+				});
+			}
+
+			});
+
+			$scope.order = OrderList;
+
+		};
+
+		$scope.getTemplateOrder = function (order) {
+			return 'displayorder';
+		};
+
+	//Init Menu
+
+	loadCategories();
+	loadItems();
+	loadDiscounts();
+	initOrder();
+
   
   }]);
