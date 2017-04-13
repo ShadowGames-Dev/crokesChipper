@@ -58,26 +58,23 @@
 </script>
 
 <script type="text/ng-template" id="displayitem">
-<div class="col-xs-10 col-xs-offset-1">
-  <div class="row">
-         <div class="col-md-1">
-         {{$index+1}}
+<!-- MUST FIX PASSING THE QTY VALUE TO FUNCTION!!! -->
+         <div class="col-xs-1">
+         <p>{{i._id}}</p>
          </div>
-          <div class="col-md-3"   >
-            {{i.name}}
+          <div class="col-xs-3"   >
+            <p>{{i.name}}</p>
          </div>
-          <div class="col-md-3">
-            {{i.qty}}
+          <div class="col-xs-1">
+            <p>{{i.price}}</p>
          </div>
-          <div class="col-md-1">
-            {{i.price}}
+         <div class="col-xs-1">
+            <input type="number" placeholder="1" ng-model="qtyValue" min="1" max="25">
          </div>
-         <div class="col-md-4">
-            <button type="button" class="btn" ng-click="addToOrder(i._id)">Add to Order</button>   
+         <div class="col-xs-4 col-xs-offset-1">
+            <button type="button" class="btn" ng-click="addToOrder(i._id, qtyValue)">Add to Order</button>   
           </div>
           <br/><br/>
-  </div>
-</div>
 </script>
 
 <script type="text/ng-template" id="displaydiscount">
@@ -100,12 +97,18 @@
          <div class="col-md-3">
             {{o.qty}}
          </div>
-          <div class="col-md-3"   >
+          <div class="col-md-3">
             {{o.name}} {{o.category_id}}
          </div>
           <div class="col-md-2">
             {{o.price}}
          </div>
+         <div class="col-xs-1">
+            <input type="number" placeholder="1" ng-model="qtyRmv" min="1" max="25">
+         </div>
+         <div class="col-md-2 col-md-offset-1">
+          <button class="text-right btn" ng-click="removeFromOrder(o._id)">X</button>
+        </div>
           <br/><br/>
 </script>
 

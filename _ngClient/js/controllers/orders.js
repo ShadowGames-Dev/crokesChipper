@@ -112,45 +112,77 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 		OrderList = [];
 	}
 
-	$scope.addToOrder = function (itemId) {
+	$scope.addToOrder = function (itemId, itemQty) {
+
+		//MUST FIX GETTING QTY VALUE FROM INPUT FIELD!!!
+
+		var temp; var itmQty;
+
+		if(itemQty === undefined){
+			itmQty = 1;
+		} else { itmQty = 1; }
+
 
 			$scope.items.some(function(item){
 
-				var temp = {
+				if(item._id === itemId){
+					temp = {
 						_id: item._id,
 						name: (item.name+" "+item.category_id),
-						qty: 1,
+						qty: itmQty,
 						price: item.price
 					}
+				}
+			});
 
-				if(item._id == itemId && OrderList == 0){
+				if(OrderList.length === 0){
 						OrderList.push(temp);
 					}
 
-				else if(item._id == itemId){
+				else{
+
+					var exist = false;
 
 				OrderList.some(function(tempChk){
-					if(tempChk._id == temp._id)
+
+					if(tempChk._id === temp._id)
 					{
-						temp = {
-							_id: tempChk._id,
-							name: tempChk.name,
-							qty: (tempChk.qty++),
-							price: tempChk.price
-						}
-						//index = OrderList.findIndex(x => x._id==temp._id);
-						//console.log(index);
-						//OrderList[index] = temp
-					}else {
-						OrderList.push(temp);
+						index = OrderList.findIndex(x => x._id===temp._id);
+						OrderList[index].qty = (tempChk.qty+itmQty);
+						exist = true;
 					}
 				});
-			}
 
-			});
+				if(!exist){
+					OrderList.push(temp);
+				}
+			}
 
 			$scope.order = OrderList;
 
+		};
+
+		$scope.removeFromOrder = function (itemId, remQty) {
+
+			var rmvQty;
+
+			if(remQty === undefined){
+			rmvQty = 1;
+			} else { rmvQty = 1; }
+
+			OrderList.some(function(tempChk){
+
+					if(tempChk._id === itemId)
+					{
+						index = OrderList.findIndex(x => x._id===itemId);
+
+						if(tempChk.qty === 1){
+							OrderList.splice(index, 1);	
+						} else {
+							OrderList[index].qty = (tempChk.qty-rmvQty);
+						}
+					}
+				});
 		};
 
 		$scope.getTemplateOrder = function (order) {

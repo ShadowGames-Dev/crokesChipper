@@ -107,21 +107,21 @@
 			"_id": 13,
 			"category_id": "chicken",
 			"name": "six nuggets",
-			"qty": 6,
+			"qty": 1,
 			"price": 3
 		},
 		{
 			"_id": 14,
 			"category_id": "chicken",
 			"name": "eight nuggets",
-			"qty": 8,
+			"qty": 1,
 			"price": 3.50
 		},
 		{
 			"_id": 15,
 			"category_id": "chicken",
 			"name": "ten nuggets",
-			"qty": 10,
+			"qty": 1,
 			"price": 4
 		},
 		{
@@ -172,43 +172,50 @@
 		{
 			"_id": "Monday",
 			"price": 5,
-			"items": [{"items_id": 11 },{ "items_id": 1 }],
+			"index": 1,
+			"items": [{"items_id": 11, "itm_qty": 1 },{ "items_id": 1, "itm_qty": 1}],
 			"title": "1/4 Pounder with Cheese and Chips"
 		},
 		{
 			"_id": "Tuesday",
 			"price": 5,
-			"items": [{"items_id": 16 },{ "items_id": 1 }],
+			"index": 2,
+			"items": [{"items_id": 16, "itm_qty": 1 },{ "items_id": 1, "itm_qty": 1}],
 			"title": "Chicken Fillet Burger and Chips"
 		},
 		{
 			"_id": "Wednesday",
 			"price": 5,
-			"items": [{"items_id": 17 },{ "items_id": 1 }],
+			"index": 3,
+			"items": [{"items_id": 17, "itm_qty": 1 },{ "items_id": 1, "itm_qty": 1}],
 			"title": "Snack Box - 2 Pieces of Chicken with Chips"
 		},
 		{
 			"_id": "Thursday",
 			"price": 5,
-			"items": [{"items_id": 9},{ "items_id": 1 }],
+			"index": 4,
+			"items": [{"items_id": 9, "itm_qty": 1},{ "items_id": 1, "itm_qty": 1}],
 			"title": "Double Cheese Burger and Chips"
 		},
 		{
 			"_id": "Friday",
 			"price": 6,
-			"items": [{"items_id": 21 }],
+			"index": 5,
+			"items": [{"items_id": 21, "itm_qty": 1}],
 			"title": "Fish Box - Plaice and Chips"
 		},
 		{
 			"_id": "Saturday",
 			"price": 5,
-			"items": [{"items_id": 13},{ "items_id": 4},{ "items_id": 1 }],
+			"index": 6,
+			"items": [{"items_id": 13, "itm_qty": 1},{ "items_id": 4, "itm_qty": 1},{ "items_id": 1, "itm_qty": 2}],
 			"title": "6 Nuggets, 2 Plain Sausages and Chips"
 		},
 		{
 			"_id": "Every Day Meal",
 			"price": 10,
-			"items": [{"items_id": 1},{ "items_id": 7},{ "items_id": 4},{ "items_id": 13 }],
+			"index": 7,
+			"items": [{"items_id": 1, "itm_qty": 2},{ "items_id": 7, "itm_qty": 2},{ "items_id": 4, "itm_qty": 2},{ "items_id": 13, "itm_qty": 1 }],
 			"title": "2 Chips, 2 Plain Burgers, 2 Plain Sausages, Six Nuggets"
 		}
 
