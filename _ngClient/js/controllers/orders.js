@@ -8,7 +8,7 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
   	//Categories ---
 
   	var aPromise;
-  	var itemList, discountList, OrderList, availDisList;
+  	var itemList, discountList, OrderList;
 
 
   	loadCategories = function() 
@@ -163,7 +163,6 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 			$scope.order = OrderList;
 
 			updateCheckoutBtn();
-			checkSpecials();
 
 		};
 
@@ -190,7 +189,6 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 				});
 
 			updateCheckoutBtn();
-			checkSpecials();
 		};
 
 		$scope.getTemplateOrder = function (order) {
@@ -211,6 +209,8 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 			if(OrderList.length !== 0){
 				checkoutBtn.disabled = false;
 			}else{ checkoutBtn.disabled = true; }
+
+		checkSpecials();
 	};
 
 	$scope.checkoutOrder = function () {
@@ -221,34 +221,32 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 
 	checkSpecials = function (){
 
-		var item, disItem;
+		var tempDisList = [];
+		var availDisList = [];
 
 		OrderList.some(function(tempItem){
-			item = tempItem;
-			for(var i =0; i < discountList.length; i++){
-				discountList[i].items.some(function(tempDisItm){
-					if(tempDisItm.items_id === item._id){
-						disItem = discountList[i];
+			discountList.some(function(discountItem){
+				discountItem.items.some(function(tempDisItems){
+					if(tempItem._id === tempDisItems.items_id){
+						tempDisList.push(discountItem);
 					}
 				});
-
-					if(availDisList.length === 0){
-						availDisList.push(disItem);
-					}else if(availDisList !== 0){
-
-					availDisList.some(function(tempAvailItem) {
-						console.log(tempAvailItem);
-							// if(tempAvailItem._id === disItem._id){}
-							// else {
-							// 	availDisList.push(disItem);
-							// }
-						});
-					}
-
-			}
+			});
 		});
 
-		if(OrderList === 0){
+		$.each(tempDisList, function(i, e) {
+        	if ($.inArray(e, availDisList) == -1) availDisList.push(e);
+    	});
+
+    	availDisList.sort(function (a, b) {
+ 			return a.index - b.index;
+		});
+
+		availDisList.some(function(tempDis){
+			console.log(tempDis);
+		});
+
+		if(OrderList.length === 0){
 			availDisList = [];
 			$scope.specialavail = availDisList;
 		}else{
@@ -262,7 +260,9 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 
 	$scope.updateOrderSpecial = function (itemId) {
 
-		console.log(availDisList.length);
+		var orderUpdate = $scope.specialavail;
+
+		console.log(orderUpdate.length);
 
 	};
   

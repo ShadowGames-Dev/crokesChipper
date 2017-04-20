@@ -72,7 +72,7 @@
 <h3>Available Discounts -</h3>
 
 <div id="showAvailDis">
- <div id="{{u._id}}" class="row" ng-repeat="u in specialavail | orderBy:['index'] track by o.index"
+ <div id="{{u._id}}" class="row" ng-repeat="u in specialavail | orderBy:['index'] track by u.index"
  ng-include src="getTemplateDisAvail(u)">
 
 </div>
