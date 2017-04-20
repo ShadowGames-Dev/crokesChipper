@@ -124,6 +124,7 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 			itmQty = 1;
 		} else { itmQty = 1; }
 
+		if(itemId >=0 && itemId <= itemList.length){
 
 			$scope.items.some(function(item){
 
@@ -137,7 +138,20 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 				}
 			});
 
-				if(OrderList.length === 0){
+		}else{
+			$scope.discounts.some(function(disItem){
+				if(disItem._id === itemId){
+					temp = {
+						_id: disItem._id,
+						name: disItem.title,
+						qty: itmQty,
+						price: disItem.price
+					}
+				}
+			});
+		}
+
+			if(OrderList.length === 0){
 						OrderList.push(temp);
 					}
 
@@ -240,10 +254,6 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 
     	availDisList.sort(function (a, b) {
  			return a.index - b.index;
-		});
-
-		availDisList.some(function(tempDis){
-			console.log(tempDis);
 		});
 
 		if(OrderList.length === 0){
