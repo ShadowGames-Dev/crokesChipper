@@ -8,7 +8,8 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
   	//Categories ---
 
   	var aPromise;
-  	var itemList, discountList, OrderList;
+  	var itemList, discountList, OrderList, availDisList;
+
 
   	loadCategories = function() 
 		{ 
@@ -110,6 +111,7 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 
 	initOrder = function(){
 		OrderList = [];
+		availDisList = [];
 	}
 
 	$scope.addToOrder = function (itemId, itemQty) {
@@ -160,6 +162,9 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 
 			$scope.order = OrderList;
 
+			updateCheckoutBtn();
+			checkSpecials();
+
 		};
 
 		$scope.removeFromOrder = function (itemId, remQty) {
@@ -177,12 +182,15 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 						index = OrderList.findIndex(x => x._id===itemId);
 
 						if(tempChk.qty === 1){
-							OrderList.splice(index, 1);	
+							OrderList.splice(index, 1);
 						} else {
 							OrderList[index].qty = (tempChk.qty-rmvQty);
 						}
 					}
 				});
+
+			updateCheckoutBtn();
+			checkSpecials();
 		};
 
 		$scope.getTemplateOrder = function (order) {
@@ -196,5 +204,66 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 	loadDiscounts();
 	initOrder();
 
+	//Handle Checkout
+
+	updateCheckoutBtn = function () {
+		var checkoutBtn = document.getElementById("checkoutBtn");
+			if(OrderList.length !== 0){
+				checkoutBtn.disabled = false;
+			}else{ checkoutBtn.disabled = true; }
+	};
+
+	$scope.checkoutOrder = function () {
+		console.log(OrderList);
+	};
+
+	//Specials Available
+
+	checkSpecials = function (){
+
+		var item, disItem;
+
+		OrderList.some(function(tempItem){
+			item = tempItem;
+			for(var i =0; i < discountList.length; i++){
+				discountList[i].items.some(function(tempDisItm){
+					if(tempDisItm.items_id === item._id){
+						disItem = discountList[i];
+					}
+				});
+
+					if(availDisList.length === 0){
+						availDisList.push(disItem);
+					}else if(availDisList !== 0){
+
+					availDisList.some(function(tempAvailItem) {
+						console.log(tempAvailItem);
+							// if(tempAvailItem._id === disItem._id){}
+							// else {
+							// 	availDisList.push(disItem);
+							// }
+						});
+					}
+
+			}
+		});
+
+		if(OrderList === 0){
+			availDisList = [];
+			$scope.specialavail = availDisList;
+		}else{
+			$scope.specialavail = availDisList;
+		}
+	};
+
+	$scope.getTemplateDisAvail = function (specialavail) {
+			return 'disavail';
+		};
+
+	$scope.updateOrderSpecial = function (itemId) {
+
+		console.log(availDisList.length);
+
+	};
   
   }]);

@@ -112,6 +112,22 @@
           <br/><br/>
 </script>
 
+<script type="text/ng-template" id="disavail">
+         <div class="col-md-3">
+            {{u._id}}
+         </div>
+          <div class="col-md-4">
+            {{u.title}}
+         </div>
+          <div class="col-md-2">
+            {{u.price}}
+         </div>
+         <div class="col-md-3 col-md-offset-1">
+          <button class="text-right btn" ng-click="updateOrderSpecial(u._id)">Update Order</button>
+        </div>
+          <br/><br/>
+</script>
+
 <footer>
 <hr/>
         <ul class="list-unstyled">
