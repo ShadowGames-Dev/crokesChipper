@@ -11,25 +11,29 @@ crokesChipper.config(['$routeProvider','$httpProvider', '$provide',  '$locationP
     $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common['X-Requested-With'];	  
  
-			$routeProvider.					
-					  when('/home', {
-						templateUrl: './partials/home.html',
-						controller: 'HomeCtrl'
-					  }).	
-					  when('/order', {
+			$routeProvider.
+					when('/menu',{
 						templateUrl: './partials/order.html',
 						controller: 'OrderCtrl'
-					  }).
-					  when('/item-manager', {
-						templateUrl: './partials/item-manager.html',
-						controller: 'ItemCtrl'
-					  }).
-					  when('/employee-manager', {
-						templateUrl: './partials/employee-manager.html',
-						controller: 'EmployeeCtrl'
-					  }). 						
+						}).				
+					 //  when('/home', {
+						// templateUrl: './partials/home.html',
+						// controller: 'HomeCtrl'
+					 //  }).	
+					 //  when('/order', {
+						// templateUrl: './partials/order.html',
+						// controller: 'OrderCtrl'
+					 //  }).
+					 //  when('/item-manager', {
+						// templateUrl: './partials/item-manager.html',
+						// controller: 'ItemCtrl'
+					 //  }).
+					 //  when('/employee-manager', {
+						// templateUrl: './partials/employee-manager.html',
+						// controller: 'EmployeeCtrl'
+					 //  }). 						
 					  otherwise({
-						redirectTo: '/order'
+						redirectTo: '/menu'
 					  });
 
 			//$locationProvider.html5Mode(true); removes # in URL, breaks routes 

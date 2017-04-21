@@ -3,7 +3,7 @@ var ordersController = angular.module('ordersController', []);
 ordersController.controller('OrderCtrl', ['$scope', '$http', 
   function($scope, $http) {
 
-  	$scope.title= "Order Menu";
+  	$scope.title= "Crokes Chipper";
 
   	//Categories ---
 
@@ -239,30 +239,23 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 		OrderNum++;
 
 		var OrderString = "<h4>";
-		var OrderStringItem = "<h4>";
-		var OrderStringQty = "<h4>";
-		var OrderStringPrice = "<h4>"
+		var OrderStringItems = ""
 
 		var popupWin = window.open('', '_blank', 'width=1000,height=750');
   		popupWin.document.open();
   		OrderList.some(function(orderItem){
-  			OrderStringItem += ("Item - " + orderItem._id + "   " + orderItem.name + "<br/>");
-  			OrderStringQty += ("Qty. " + orderItem.qty + "<br/>");
-  			OrderStringPrice += ("Price. " + (orderItem.price*orderItem.qty) + "<br/>");
+  			OrderStringItems += ("<li>Menu Item. " + orderItem._id + "  -  " + orderItem.name + ",    Qty. " + orderItem.qty + ",    Price. &euro;" + (orderItem.price*orderItem.qty).toFixed(2) + "</li>");
   		});
 
-  		OrderString += "<br/>Total price = "+totalPrice+"</h4>";
-  		OrderStringItem += "</h4>";
-		OrderStringQty += "</h4>";
-		OrderStringPrice += "</h4>"
+  		OrderString += "<br/><br/>Total price = &euro;"+totalPrice.toFixed(2)+"</h4>";
 
 
-  		popupWin.document.write('<html><head><title>Order Number - '+OrderNum+'</title></head><body onload="window.print()"><div class="row"><div class="col-xs-4 text-center">'
-  		 + OrderStringItem + '<div><div class="col-xs-4 text-center">'+ OrderStringQty +'</div><div class="col-xs-4 text-center">'
-  		 + OrderStringPrice +'</div></div>'+OrderString+'</body></html>');
+  		popupWin.document.write('<html><head><title>Order Number - '+OrderNum+'</title> <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"><script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> </head><body onload="window.print()"><h2>Order Number - '+OrderNum+'</h2><div class="row"><div class="col-xs-10 col-xs-offset-1"><ol>'
+  		 + OrderStringItems + '</ol></div></div>'+OrderString+'</body></html>');
   		popupWin.document.close();
 
   		initOrder();
+  		updateCheckoutBtn();
 	};
 
 	//Specials Available
