@@ -101,15 +101,15 @@
          <div class="col-md-3">
             {{o.qty}}
          </div>
-          <div class="col-md-3">
+          <div class="col-md-4">
             {{o.name}} {{o.category_id}}
          </div>
           <div class="col-md-2">
             &euro;{{o.price.toFixed(2)}}
-         </div>
+         </div><!--
          <div class="col-xs-1">
             <input type="number" placeholder="1" ng-model="qtyRmv" min="1" max="25">
-         </div>
+         </div>-->
          <div class="col-md-2 col-md-offset-1">
           <button class="text-right btn" ng-click="removeFromOrder(o._id)">X</button>
         </div>
