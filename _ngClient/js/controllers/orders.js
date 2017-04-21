@@ -8,7 +8,8 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
   	//Categories ---
 
   	var aPromise;
-  	var itemList, discountList, OrderList;
+  	var itemList, discountList, OrderList, totalPrice;
+  	var OrderNum = 0;
 
 
   	loadCategories = function() 
@@ -112,6 +113,10 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 	initOrder = function(){
 		OrderList = [];
 		availDisList = [];
+		totalPrice = 0;
+		$scope.totalcost = totalPrice;
+		$scope.order = OrderList;
+		$scope.specialavail = availDisList;
 	}
 
 	$scope.addToOrder = function (itemId, itemQty) {
@@ -119,6 +124,7 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 		//MUST FIX GETTING QTY VALUE FROM INPUT FIELD!!!
 
 		var temp; var itmQty;
+		var count = -1;
 
 		if(itemQty === undefined){
 			itmQty = 1;
@@ -127,7 +133,6 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 		if(itemId >=0 && itemId <= itemList.length){
 
 			$scope.items.some(function(item){
-
 				if(item._id === itemId){
 					temp = {
 						_id: item._id,
@@ -160,11 +165,10 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 					var exist = false;
 
 				OrderList.some(function(tempChk){
-
+					count++;
 					if(tempChk._id === temp._id)
 					{
-						index = OrderList.findIndex(x => x._id===temp._id);
-						OrderList[index].qty = (tempChk.qty+itmQty);
+						OrderList[count].qty = (tempChk.qty+itmQty);
 						exist = true;
 					}
 				});
@@ -183,21 +187,20 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 		$scope.removeFromOrder = function (itemId, remQty) {
 
 			var rmvQty;
+			var count = -1;
 
 			if(remQty === undefined){
 			rmvQty = 1;
 			} else { rmvQty = 1; }
 
 			OrderList.some(function(tempChk){
-
+				count++;
 					if(tempChk._id === itemId)
 					{
-						index = OrderList.findIndex(x => x._id===itemId);
-
 						if(tempChk.qty === 1){
-							OrderList.splice(index, 1);
+							OrderList.splice(count, 1);
 						} else {
-							OrderList[index].qty = (tempChk.qty-rmvQty);
+							OrderList[count].qty = (tempChk.qty-rmvQty);
 						}
 					}
 				});
@@ -209,9 +212,7 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 			return 'displayorder';
 		};
 
-	//Init Menu
-
-	loadCategories();
+	//loadCategories();
 	loadItems();
 	loadDiscounts();
 	initOrder();
@@ -224,11 +225,44 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 				checkoutBtn.disabled = false;
 			}else{ checkoutBtn.disabled = true; }
 
+			totalPrice = 0;
+
+		OrderList.some(function(item){
+			totalPrice += (item.price*item.qty);
+		});
+
+		$scope.totalcost = totalPrice;
 		checkSpecials();
 	};
 
 	$scope.checkoutOrder = function () {
-		console.log(OrderList);
+		OrderNum++;
+
+		var OrderString = "<h4>";
+		var OrderStringItem = "<h4>";
+		var OrderStringQty = "<h4>";
+		var OrderStringPrice = "<h4>"
+
+		var popupWin = window.open('', '_blank', 'width=1000,height=750');
+  		popupWin.document.open();
+  		OrderList.some(function(orderItem){
+  			OrderStringItem += ("Item - " + orderItem._id + "   " + orderItem.name + "<br/>");
+  			OrderStringQty += ("Qty. " + orderItem.qty + "<br/>");
+  			OrderStringPrice += ("Price. " + (orderItem.price*orderItem.qty) + "<br/>");
+  		});
+
+  		OrderString += "<br/>Total price = "+totalPrice+"</h4>";
+  		OrderStringItem += "</h4>";
+		OrderStringQty += "</h4>";
+		OrderStringPrice += "</h4>"
+
+
+  		popupWin.document.write('<html><head><title>Order Number - '+OrderNum+'</title></head><body onload="window.print()"><div class="row"><div class="col-xs-4 text-center">'
+  		 + OrderStringItem + '<div><div class="col-xs-4 text-center">'+ OrderStringQty +'</div><div class="col-xs-4 text-center">'
+  		 + OrderStringPrice +'</div></div>'+OrderString+'</body></html>');
+  		popupWin.document.close();
+
+  		initOrder();
 	};
 
 	//Specials Available
@@ -241,7 +275,7 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 		OrderList.some(function(tempItem){
 			discountList.some(function(discountItem){
 				discountItem.items.some(function(tempDisItems){
-					if(tempItem._id === tempDisItems.items_id){
+					if(tempItem._id === tempDisItems.items_id && tempItem._id !== 1){
 						tempDisList.push(discountItem);
 					}
 				});
@@ -271,8 +305,33 @@ ordersController.controller('OrderCtrl', ['$scope', '$http',
 	$scope.updateOrderSpecial = function (itemId) {
 
 		var orderUpdate = $scope.specialavail;
+		var count = -1;
 
-		console.log(orderUpdate.length);
+		orderUpdate.some(function(selectedDis){
+			if(selectedDis._id === itemId){
+				selectedDis.items.some(function(disItems){
+					OrderList.some(function(matchItem){
+						count++;
+						if(matchItem._id === disItems.items_id && matchItem._id !== 1){
+
+							var tempDis = {
+								_id: selectedDis._id,
+								name: selectedDis.title,
+								qty: matchItem.qty,
+								price: selectedDis.price
+							}
+
+								OrderList.splice(count, 1, tempDis);
+
+								updateCheckoutBtn();
+
+						}
+					});
+				});
+			}
+		});
+
+		$scope.order = OrderList;
 
 	};
   

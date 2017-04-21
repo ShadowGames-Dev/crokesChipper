@@ -62,15 +62,15 @@
          <div class="col-xs-1">
          <p>{{i._id}}</p>
          </div>
-          <div class="col-xs-3"   >
-            <p>{{i.name}}</p>
+          <div class="col-xs-4"   >
+            <p>{{i.name}} {{i.category_id}}</p>
          </div>
           <div class="col-xs-1">
-            <p>{{i.price}}</p>
-         </div>
+            <p>&euro;{{i.price.toFixed(2)}}</p>
+         </div><!--
          <div class="col-xs-1">
             <input type="number" placeholder="1" ng-model="qtyValue" min="1" max="25">
-         </div>
+         </div>-->
          <div class="col-xs-4 col-xs-offset-1">
             <button type="button" class="btn" ng-click="addToOrder(i._id, qtyValue)">Add to Order</button>   
           </div>
@@ -85,7 +85,7 @@
             {{d.title}}
          </div>
           <div class="col-md-2">
-            {{d.price}}
+            &euro;{{d.price.toFixed(2)}}
          </div>
          <div class="col-md-4">
             <button type="button" class="btn" ng-click="addToOrder(d._id)">Add to Order</button>   
@@ -101,7 +101,7 @@
             {{o.name}} {{o.category_id}}
          </div>
           <div class="col-md-2">
-            {{o.price}}
+            &euro;{{o.price.toFixed(2)}}
          </div>
          <div class="col-xs-1">
             <input type="number" placeholder="1" ng-model="qtyRmv" min="1" max="25">
@@ -120,7 +120,7 @@
             {{u.title}}
          </div>
           <div class="col-md-2">
-            {{u.price}}
+            {{u.price.toFixed(2)}}
          </div>
          <div class="col-md-3 col-md-offset-1">
           <button class="text-right btn" ng-click="updateOrderSpecial(u._id)">Update Order</button>
