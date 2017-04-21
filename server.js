@@ -73,6 +73,24 @@ if (runtime.isLocalHost) {
     }); 
 		
  		
+}   else {
+
+    app.set('port', runtime.port);
+    
+    if (runtime.architecture === "bluemix")
+    {
+        app.listen(runtime.port, function() {
+            
+            console.log (runtime.architecture + ' server startup ok on port: ' + runtime.port); 
+        }); 
+    }
+    else 
+        if (runtime.architecture === "heroku")
+    { 
+        app.listen(runtime.port, function() {
+            console.log (runtime.architecture + ' server startup ok on port: ' + runtime.port); 
+        });             
+    }       
 }
 
 //Server logging and use ----------
